@@ -13,7 +13,7 @@ import java.awt.Graphics2D;
 import java.awt.Color;
 
 public class GamePanel extends JPanel implements Runnable{
-     //screen settings
+     //SCREEN SETTINGS
      final int originalTileSize = 16; // 16x16 tile
      final int scale = 3;
 
@@ -31,15 +31,18 @@ public class GamePanel extends JPanel implements Runnable{
 
      //FPS
      int FPS = 60;
+     boolean paused;
 
+     //Initiallizing game components
      TileManager tileM = new TileManager(this);
      KeyHandler keyH = new KeyHandler();
-     Thread gameThread;
+     Thread gameThread; //Main thread
      public CollisionChecker cChecker = new CollisionChecker(this);
      public AssetSetter aSetter = new AssetSetter(this);
      public Player player = new Player(this, keyH);
      public SuperObject obj[] = new SuperObject[10]; 
 
+     //Default player settings
      int playerX = 100;
      int playerY = 100;
      int playerSpeed = 4;
@@ -63,7 +66,6 @@ public class GamePanel extends JPanel implements Runnable{
 
      @Override
      public void run() {
-          
           while(gameThread != null){
                double drawInterval = 1000000000 / FPS;
                double nextDrawTime = System.nanoTime() + drawInterval;

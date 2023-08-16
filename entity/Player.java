@@ -1,3 +1,9 @@
+/**
+ * <h1>Class for main playable character<h1>
+ * Class outlining Link's playable character
+ * <p>Extends Entity class<p>
+ */
+
 package entity;
 
 import java.awt.Graphics2D;
@@ -16,6 +22,7 @@ public class Player extends Entity{
 
      public final int screenX;
      public final int screenY;
+     int hasKey = 0;
 
      public Player(GamePanel gp, KeyHandler keyH){
           this.gp = gp;
@@ -36,6 +43,9 @@ public class Player extends Entity{
           getPlayerImage(); 
      }
 
+     /**
+      * Sets the starting values for Link such as world position and speed
+      */
      public void setDefaultValues(){
           //Player positioning on the world map
           worldX = gp.tileSize * 23;
@@ -44,6 +54,9 @@ public class Player extends Entity{
           direction = "down";
      }
 
+     /**
+      * Loads the different character frames for Link
+      */
      public void getPlayerImage(){
           try{
                up1 = ImageIO.read(getClass().getResourceAsStream("/res/player/Link_Up_1.png"));
@@ -59,6 +72,9 @@ public class Player extends Entity{
           }
      }
 
+     /**
+      * Updates player regarding image movements and direction along with
+      */
      public void update(){
           if(keyH.upPressed == true || keyH.downPressed == true ||
                     keyH.leftPressed == true || keyH.rightPressed == true){
