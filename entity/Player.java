@@ -22,7 +22,7 @@ public class Player extends Entity{
 
      public final int screenX;
      public final int screenY;
-     int hasKey = 0;
+     public int hasKey = 0;
 
      public Player(GamePanel gp, KeyHandler keyH){
           this.gp = gp;
@@ -73,11 +73,10 @@ public class Player extends Entity{
      }
 
      /**
-      * Updates player regarding image movements and direction along with
+      * Updates player regarding image movements and direction along with position and collision detection
       */
      public void update(){
-          if(keyH.upPressed == true || keyH.downPressed == true ||
-                    keyH.leftPressed == true || keyH.rightPressed == true){
+          if(keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true || keyH.rightPressed == true){
                if(keyH.upPressed == true){
                     direction = "up";
                }else if(keyH.downPressed == true){
@@ -128,9 +127,15 @@ public class Player extends Entity{
           
      }
 
+     public boolean showingMessage = false;
      public void pickUpObject(int index){
           if(index != 999){
                gp.obj[index] = null;
+               if(showingMessage == false){
+                    System.out.println("Showing message now");
+                    gp.ui.showMessage("Got it!");
+                    showingMessage = true;
+               }
           }
      }
      

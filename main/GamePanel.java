@@ -35,10 +35,11 @@ public class GamePanel extends JPanel implements Runnable{
 
      //Initiallizing game components
      TileManager tileM = new TileManager(this);
-     KeyHandler keyH = new KeyHandler();
+     KeyHandler keyH = new KeyHandler(this);
      Thread gameThread; //Main thread
      public CollisionChecker cChecker = new CollisionChecker(this);
      public AssetSetter aSetter = new AssetSetter(this);
+     public UI ui = new UI(this);
      public Player player = new Player(this, keyH);
      public SuperObject obj[] = new SuperObject[10]; 
 
@@ -46,6 +47,11 @@ public class GamePanel extends JPanel implements Runnable{
      int playerX = 100;
      int playerY = 100;
      int playerSpeed = 4;
+
+     //Game State
+     public int gameState;
+     public final int playState = 1;
+     public final int pauseState = 2;
      
      public GamePanel(){
           this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -57,6 +63,7 @@ public class GamePanel extends JPanel implements Runnable{
 
      public void setUpGame(){
           aSetter.setObject();
+          gameState = playState;
      }
 
      public void startGameThread(){
@@ -87,14 +94,18 @@ public class GamePanel extends JPanel implements Runnable{
 
                     nextDrawTime += drawInterval;
                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                }
           }    
      }
 
      public void update(){
-          player.update();
+          if(gameState == playState){
+               player.update();
+          }
+          if(gameState == pauseState){
+               //nothing
+          }
      }
 
      public void paintComponent(Graphics g){
@@ -114,6 +125,9 @@ public class GamePanel extends JPanel implements Runnable{
 
           //PLAYER
           player.draw(g2);
+
+          //UI
+          ui.draw(g2);
 
           g2.dispose();
      }
