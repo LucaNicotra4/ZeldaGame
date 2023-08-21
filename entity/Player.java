@@ -22,7 +22,6 @@ public class Player extends Entity{
 
      public final int screenX;
      public final int screenY;
-     public int hasKey = 0;
 
      public Player(GamePanel gp, KeyHandler keyH){
           this.gp = gp;
@@ -127,15 +126,9 @@ public class Player extends Entity{
           
      }
 
-     public boolean showingMessage = false;
      public void pickUpObject(int index){
           if(index != 999){
-               gp.obj[index] = null;
-               if(showingMessage == false){
-                    System.out.println("Showing message now");
-                    gp.ui.showMessage("Got it!");
-                    showingMessage = true;
-               }
+               
           }
      }
      
