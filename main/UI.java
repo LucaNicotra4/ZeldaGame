@@ -4,6 +4,9 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+
+import javax.imageio.ImageIO;
 
 
 public class UI {
@@ -14,8 +17,10 @@ public class UI {
      public String message = "";
      int messageCounter = 0;
      public boolean gameFinished = false;
-     public int slotCol = 0;
-     public int slotRow = 0;
+     int slotXStart, slotYStart;
+     public int slotCol = 1;
+     public int slotRow = 1;
+     public BufferedImage swordBase, shieldBase, armorBase;
 
 
      public UI(GamePanel gp){
@@ -24,6 +29,7 @@ public class UI {
           messageOn = false;
           arial_40 = new Font("Arial", Font.PLAIN, 40);
           arial_80B = new Font("Arial", Font.BOLD, 40);
+          loadBaseImages();
      }
 
      public void showMessage(String text){
@@ -99,6 +105,23 @@ public class UI {
           g2.setColor(c);
           g2.setStroke(new BasicStroke(5));
           g2.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
+
+          //Base pics
+          int picX = gp.tileSize*9 + 10;
+          int picY = gp.tileSize + 20;
+          g2.drawImage(swordBase, picX, picY, gp.tileSize, gp.tileSize, null);
+          g2.drawImage(shieldBase, picX, picY+gp.tileSize, gp.tileSize, gp.tileSize, null);
+          g2.drawImage(armorBase, picX, picY+(2*gp.tileSize), gp.tileSize, gp.tileSize, null);
+          g2.drawImage(armorBase, picX, picY+(3*gp.tileSize), gp.tileSize, gp.tileSize, null);
      }
 
+     public void loadBaseImages(){
+          try{
+               swordBase = ImageIO.read(getClass().getResourceAsStream("/res/tiles/sword.png"));
+               shieldBase = ImageIO.read(getClass().getResourceAsStream("/res/tiles/shield.png"));
+               armorBase = ImageIO.read(getClass().getResourceAsStream("/res/tiles/armor.png"));
+          }catch(Exception e){
+               System.out.println("Error loading inventory images");
+          }
+     }
 }

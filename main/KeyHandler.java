@@ -22,6 +22,29 @@ public class KeyHandler implements KeyListener{
      public void keyPressed(KeyEvent e) {
           int code = e.getKeyCode();
 
+          if(gp.gameState == gp.playState){
+               playState(code);
+          }else if(gp.gameState == gp.pauseState){
+               pauseState(code);
+          }
+     }
+
+
+     public void pauseState(int code){
+          if(code == KeyEvent.VK_P){
+               gp.gameState = gp.playState;
+          }else if(code == KeyEvent.VK_W){
+               if(gp.ui.slotRow != 0) gp.ui.slotRow--;
+          }else if(code == KeyEvent.VK_A){
+               if(gp.ui.slotCol != 1) gp.ui.slotCol--;
+          }else if(code == KeyEvent.VK_S){
+               if(gp.ui.slotRow != 3) gp.ui.slotRow++;
+          }else if(code == KeyEvent.VK_D){
+               if(gp.ui.slotCol != 3) gp.ui.slotCol++;
+          }
+     }
+
+     public void playState(int code){
           if(code == KeyEvent.VK_W){ //if user presses 'W'
                upPressed = true;
           }
@@ -44,7 +67,6 @@ public class KeyHandler implements KeyListener{
                     gp.gameState = gp.playState;
                }
           }
-
      }
 
      @Override

@@ -24,7 +24,9 @@ public class TileManager {
 
           getTileImage();
           loadMap("/res/maps/world01.txt");
+          //loadMap("/res/maps/LinkHouse.txt");
      }
+
 
      public void getTileImage(){
           try{
@@ -77,7 +79,8 @@ public class TileManager {
                          int num = Integer.parseInt(numbers[col]);
 
                          mapTileNum[col][row] = num;
-                         col++;
+                         col++; 
+                         
                     }
                     if(col == gp.maxWorldCol){
                          col = 0;

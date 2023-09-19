@@ -10,6 +10,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -22,6 +23,8 @@ public class Player extends Entity{
 
      public final int screenX;
      public final int screenY;
+
+     public ArrayList<Entity> inventory = new ArrayList<Entity>();
 
      public Player(GamePanel gp, KeyHandler keyH){
           this.gp = gp;
