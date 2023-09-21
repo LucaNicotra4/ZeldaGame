@@ -37,6 +37,7 @@ public class UI {
           loadInventoryItems();
      }
 
+     //displays message to screen
      public void showMessage(String text){
           message = text;
           messageOn = true;
