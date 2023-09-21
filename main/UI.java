@@ -5,8 +5,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+
+import entity.inventoryItem;
 
 
 public class UI {
@@ -21,6 +24,7 @@ public class UI {
      public int slotCol = 1;
      public int slotRow = 1;
      public BufferedImage swordBase, shieldBase, armorBase;
+     public inventoryItem[][] items = new inventoryItem[4][3];
 
 
      public UI(GamePanel gp){
@@ -30,6 +34,7 @@ public class UI {
           arial_40 = new Font("Arial", Font.PLAIN, 40);
           arial_80B = new Font("Arial", Font.BOLD, 40);
           loadBaseImages();
+          loadInventoryItems();
      }
 
      public void showMessage(String text){
@@ -113,6 +118,33 @@ public class UI {
           g2.drawImage(shieldBase, picX, picY+gp.tileSize, gp.tileSize, gp.tileSize, null);
           g2.drawImage(armorBase, picX, picY+(2*gp.tileSize), gp.tileSize, gp.tileSize, null);
           g2.drawImage(armorBase, picX, picY+(3*gp.tileSize), gp.tileSize, gp.tileSize, null);
+
+          //Inventory Items
+          picX = gp.tileSize*10 + 20;
+          picY = gp.tileSize + 20;
+          int origX = picX;
+          int origY = picY;
+          c = new Color(204,204,0, 180); //Opaque Gold
+          g2.setColor(c);
+          for(int i = 0; i < items.length; i++){
+               picY = origY + (i * gp.tileSize);
+               for(int j = 0; j < items[i].length; j++){
+                    picX = origX + (j * gp.tileSize);
+                    if(items[i][j] != null){
+                         if(items[i][j].selected){
+                              g2.fillRoundRect(picX, picY, gp.tileSize, gp.tileSize, 10, 10);
+                         }
+                         g2.drawImage(items[i][j].image, picX, picY, gp.tileSize, gp.tileSize, null);
+                    }
+               }
+          }
+     }
+
+     public void itemSelected(){
+          for(int i = 0; i < items[slotRow].length; i++){
+               items[slotRow][i].selected = false;
+          }
+          items[slotRow][slotCol-1].selected = true;
      }
 
      public void loadBaseImages(){
@@ -123,5 +155,23 @@ public class UI {
           }catch(Exception e){
                System.out.println("Error loading inventory images");
           }
+     }
+
+     public void loadInventoryItems(){ //swords, shields, armor
+          items[0][0] = new inventoryItem("/res/objects/woodSword.png");
+          items[0][1] = new inventoryItem("/res/objects/baseSword.png");
+          items[0][2] = new inventoryItem("/res/objects/masterSword.png");
+
+          items[1][0] = new inventoryItem("/res/objects/woodShield.png");
+          items[1][1] = new inventoryItem("/res/objects/baseShield.png");
+          items[1][2] = new inventoryItem("/res/objects/hyruleShield.png");
+
+          items[2][0] = new inventoryItem("/res/objects/heroArmor.png");
+          items[2][1] = new inventoryItem("/res/objects/zoraArmor.png");
+          items[2][2] = new inventoryItem("/res/objects/magicArmor.png");
+
+          // items[3][0] = new inventoryItem("/res/objects/baseSword.png");
+          // items[3][1] = new inventoryItem("/res/objects/baseSword.png");
+          // items[3][2] = new inventoryItem("/res/objects/baseSword.png");
      }
 }

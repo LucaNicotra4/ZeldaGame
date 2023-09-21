@@ -24,8 +24,6 @@ public class Player extends Entity{
      public final int screenX;
      public final int screenY;
 
-     public ArrayList<Entity> inventory = new ArrayList<Entity>();
-
      public Player(GamePanel gp, KeyHandler keyH){
           this.gp = gp;
           this.keyH = keyH;

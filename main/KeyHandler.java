@@ -41,6 +41,8 @@ public class KeyHandler implements KeyListener{
                if(gp.ui.slotRow != 3) gp.ui.slotRow++;
           }else if(code == KeyEvent.VK_D){
                if(gp.ui.slotCol != 3) gp.ui.slotCol++;
+          }else if(code == KeyEvent.VK_ENTER){
+               gp.ui.itemSelected();
           }
      }
 
