@@ -3,8 +3,11 @@ package entity;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import main.GamePanel;
+
 public class Entity {
      
+     GamePanel gp;
      public int worldX, worldY;
      public int speed;
 
@@ -14,7 +17,13 @@ public class Entity {
      public int spriteCounter = 0;
      public int spriteNum = 1;
 
-     public Rectangle solidArea;
+     public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
      public int solidAreaDefaultX, solidAreaDefaultY;
      public boolean collisionOn = false;
+
+     //abstract class, always instantiate as a subclass
+     //gp must always be passed
+     public Entity(GamePanel gp){
+          this.gp = gp;
+     }
 }

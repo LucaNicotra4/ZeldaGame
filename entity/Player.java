@@ -17,7 +17,6 @@ import main.GamePanel;
 import main.KeyHandler; 
 
 public class Player extends Entity{
-     GamePanel gp;
      KeyHandler keyH;
 
      public final int screenX;
@@ -26,7 +25,8 @@ public class Player extends Entity{
      public int hearts; //4 hearts equivalent to one full heart
 
      public Player(GamePanel gp, KeyHandler keyH){
-          this.gp = gp;
+
+          super(gp); //passing gamePanel to superclass
           this.keyH = keyH;
 
           screenX = gp.screenWidth/2 - (gp.tileSize / 2);
