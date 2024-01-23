@@ -3,6 +3,7 @@ package main;
 
 import javax.swing.JPanel;
 
+import entity.NPC_1;
 import entity.Player;
 import object.SuperObject;
 import tile.TileManager;
@@ -47,6 +48,9 @@ public class GamePanel extends JPanel implements Runnable{
      int playerX = 100;
      int playerY = 100;
      int playerSpeed = 4;
+
+     //NPC
+     NPC_1 npc = new NPC_1(this);
 
      //Game State
      public int gameState;
@@ -102,6 +106,7 @@ public class GamePanel extends JPanel implements Runnable{
      public void update(){
           if(gameState == playState){
                player.update();
+               npc.update();
           }
           if(gameState == pauseState){
                //nothing
@@ -125,6 +130,7 @@ public class GamePanel extends JPanel implements Runnable{
 
           //PLAYER
           player.draw(g2);
+          npc.draw(g2);
 
           //UI
           ui.draw(g2);

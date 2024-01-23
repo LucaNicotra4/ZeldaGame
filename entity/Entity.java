@@ -14,8 +14,8 @@ public class Entity {
      public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
      public String direction;
 
-     public int spriteCounter = 0;
-     public int spriteNum = 1;
+     public int spriteCounter = 0; //Used to count frames along with spriteNum
+     public int spriteNum = 1; //Determines which interation of sprite to use in a certain direction
 
      public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
      public int solidAreaDefaultX, solidAreaDefaultY;
