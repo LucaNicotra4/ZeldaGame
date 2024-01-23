@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -23,7 +22,9 @@ public class UI {
      int slotXStart, slotYStart;
      public int slotCol = 1;
      public int slotRow = 1;
-     public BufferedImage swordBase, shieldBase, armorBase;
+     public BufferedImage swordBase, shieldBase, armorBase,
+          fullHeart, threeQuartersHeart,halfHeart, quarterHeart, emptyHeart;
+     
      public inventoryItem[][] items = new inventoryItem[4][3];
 
 
@@ -48,7 +49,8 @@ public class UI {
           g2.setFont(arial_40);
           g2.setColor(Color.white);
           if(gp.gameState == gp.playState){
-
+               updateHearts(gp.player.hearts, gp.player.maxHearts);
+               //drawHearts();
           }
           if(gp.gameState == gp.pauseState){
                //drawPauseScreen();
@@ -83,8 +85,8 @@ public class UI {
           //Slot
           final int slotXStart = frameX + 20;
           final int slotYStart = frameY + 20;
-          int slotX = slotXStart;
-          int slotY = slotYStart;
+          // int slotX = slotXStart;
+          // int slotY = slotYStart;
 
           //Cursor
           int cursorX = slotXStart + (gp.tileSize * slotCol);
@@ -131,8 +133,8 @@ public class UI {
                picY = origY + (i * gp.tileSize);
                for(int j = 0; j < items[i].length; j++){
                     picX = origX + (j * gp.tileSize);
-                    if(items[i][j] != null){
-                         if(items[i][j].selected){
+                    if(items[i][j] != null){ //Drawing selected square
+                         if(items[i][j].selected){ //always false?
                               g2.fillRoundRect(picX, picY, gp.tileSize, gp.tileSize, 10, 10);
                          }
                          g2.drawImage(items[i][j].image, picX, picY, gp.tileSize, gp.tileSize, null);
@@ -141,11 +143,16 @@ public class UI {
           }
      }
 
+     /**
+      * Sets currently highlighted item to selected
+      */
      public void itemSelected(){
-          for(int i = 0; i < items[slotRow].length; i++){
-               items[slotRow][i].selected = false;
+          if(items[slotRow][slotCol-1].obtained){
+               for(int i = 0; i < items[slotRow].length; i++){
+                    items[slotRow][i].selected = false;
+               }
+               items[slotRow][slotCol-1].selected = true;
           }
-          items[slotRow][slotCol-1].selected = true;
      }
 
      public void loadBaseImages(){
@@ -153,6 +160,12 @@ public class UI {
                swordBase = ImageIO.read(getClass().getResourceAsStream("/res/tiles/sword.png"));
                shieldBase = ImageIO.read(getClass().getResourceAsStream("/res/tiles/shield.png"));
                armorBase = ImageIO.read(getClass().getResourceAsStream("/res/tiles/armor.png"));
+
+               fullHeart = ImageIO.read(getClass().getResourceAsStream("/res/objects/fullHeart.png"));
+               threeQuartersHeart = ImageIO.read(getClass().getResourceAsStream("/res/objects/3quarterHeart.png"));
+               halfHeart = ImageIO.read(getClass().getResourceAsStream("/res/objects/halfHeart.png"));
+               quarterHeart = ImageIO.read(getClass().getResourceAsStream("/res/objects/quarterHeart.png"));
+               emptyHeart = ImageIO.read(getClass().getResourceAsStream("/res/objects/emptyHeart.png"));
           }catch(Exception e){
                System.out.println("Error loading inventory images");
           }
@@ -175,4 +188,50 @@ public class UI {
           // items[3][1] = new inventoryItem("/res/objects/baseSword.png");
           // items[3][2] = new inventoryItem("/res/objects/baseSword.png");
      }
+
+     // public void drawHearts(){
+     //      int x = 0;
+     //      int y = 0;
+     //      for(int i = 0; i < 3; i++){
+     //           g2.drawImage(fullHeart, x, y, gp.tileSize, gp.tileSize, null);
+     //           x += gp.tileSize;
+     //      }
+     // }
+
+     
+     public void updateHearts(int hearts, int maxHearts){
+          int full = hearts % 4;
+          int count = 0;
+          int x = gp.tileSize*2;
+          int y = gp.tileSize*2;
+          for(int i = 0; i < full; i++){
+               g2.drawImage(fullHeart, x, y, gp.tileSize, gp.tileSize, null);
+               count += 4;
+               x += gp.tileSize;
+          }
+          hearts -= (full * 4);
+          if(hearts == 1){
+               g2.drawImage(quarterHeart, x, y, gp.tileSize, gp.tileSize, null);
+               count += 1;
+               x += gp.tileSize;
+          }else if(hearts == 2){
+               g2.drawImage(halfHeart, x, y, gp.tileSize, gp.tileSize, null);
+               count += 2;
+               x += gp.tileSize;
+          }else if(hearts == 3){
+               g2.drawImage(threeQuartersHeart, x, y, gp.tileSize, gp.tileSize, null);
+               count += 3;
+               x += gp.tileSize;
+          }
+
+          //draw remaining empty hearts
+          if(count < maxHearts){
+               int remaining = (maxHearts - count) % 4;
+               for(int i = 0; i < remaining; i++){
+                    g2.drawImage(emptyHeart, x, y, gp.tileSize, gp.tileSize, null);
+                    x += gp.tileSize;
+               }
+          }
+     }
+     
 }

@@ -10,7 +10,8 @@ public class inventoryItem {
      public boolean selected;
 
      public inventoryItem(String directory){
-          obtained = selected = false;
+          obtained = true;
+          selected = false;
           try{
                image = ImageIO.read(getClass().getResourceAsStream(directory));
           }catch(Exception e){

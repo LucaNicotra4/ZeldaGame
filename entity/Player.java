@@ -10,7 +10,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -23,6 +22,8 @@ public class Player extends Entity{
 
      public final int screenX;
      public final int screenY;
+     public int maxHearts; //hearts measured in quarters
+     public int hearts; //4 hearts equivalent to one full heart
 
      public Player(GamePanel gp, KeyHandler keyH){
           this.gp = gp;
@@ -40,7 +41,8 @@ public class Player extends Entity{
           solidArea.height = 28;
 
           setDefaultValues();
-          getPlayerImage(); 
+          getPlayerImage();
+          //gp.ui.updateHearts(maxHearts, maxHearts);
      }
 
      /**
@@ -52,6 +54,7 @@ public class Player extends Entity{
           worldY = gp.tileSize * 21;
           speed = 4;
           direction = "down";
+          maxHearts = hearts = 12;
      }
 
      /**
@@ -130,6 +133,15 @@ public class Player extends Entity{
      public void pickUpObject(int index){
           if(index != 999){
                
+          }
+     }
+
+     public void takeDamage(int damage){
+          if(!(hearts - damage <= 0)){
+               hearts -= damage;
+               //gp.ui.updateHearts(hearts, maxHearts);
+          }else{
+               //character dies
           }
      }
      
