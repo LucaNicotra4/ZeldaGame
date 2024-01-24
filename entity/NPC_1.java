@@ -17,7 +17,7 @@ public class NPC_1 extends Entity{
 
           super(gp);
 
-          direction = "down";
+          direction = "up";
           speed = 1;
 
           solidArea = new Rectangle();
@@ -30,13 +30,16 @@ public class NPC_1 extends Entity{
 
           worldX = gp.tileSize * 20;
           worldY = gp.tileSize * 18;
+          // screenX = gp.screenWidth/2 - (gp.tileSize / 2) + 2;
+          // screenY = gp.screenHeight/2 - (gp.tileSize /2);
+          
 
           loadImages();
      }
 
      public void loadImages(){
           try{
-               up1 = ImageIO.read(getClass().getResourceAsStream("/res/player/Link_Up_1.png"));
+               up1 = ImageIO.read(getClass().getResourceAsStream("/res/oldMan/front_still.png"));
                up2 = ImageIO.read(getClass().getResourceAsStream("/res/player/Link_Up_2.png"));
                down1 = ImageIO.read(getClass().getResourceAsStream("/res/player/Link_Down_1.png"));
                down2 = ImageIO.read(getClass().getResourceAsStream("/res/player/Link_Down_2.png"));
@@ -50,10 +53,8 @@ public class NPC_1 extends Entity{
      }
 
      public void update(){
-          // int screenX = worldX - gp.player.worldX + gp.player.screenX;
-          // int screenY = worldY - gp.player.worldY + gp.player.screenY;
-          int screenX = worldX;
-          int screenY = worldY;
+          screenX = worldX - gp.player.worldX + gp.player.screenX;
+          screenY = worldY - gp.player.worldY + gp.player.screenY;
 
           spriteCounter++;
           if(spriteCounter > 30){ //player image changes every 30 frames
@@ -73,25 +74,26 @@ public class NPC_1 extends Entity{
           // g2.fillRect(x, y, gp.tileSize, gp.tileSize); //top
           
           BufferedImage image = null;
+          image = up1;
 
-          switch(direction){
-          case "up":
-               if(spriteNum == 1) image = up1;
-               if(spriteNum == 2) image = up2;
-               break;
-          case "down":
-               if(spriteNum == 1) image = down1;
-               if(spriteNum == 2) image = down2;
-               break;
-          case "left":
-               if(spriteNum == 1) image = left1;
-               if(spriteNum == 2) image = left2;
-               break;
-          case "right":
-               if(spriteNum == 1) image = right1;
-               if(spriteNum == 2) image = right2;
-               break;
-          }
+          // switch(direction){
+          // case "up":
+          //      if(spriteNum == 1) image = up1;
+          //      if(spriteNum == 2) image = up2;
+          //      break;
+          // case "down":
+          //      if(spriteNum == 1) image = down1;
+          //      if(spriteNum == 2) image = down2;
+          //      break;
+          // case "left":
+          //      if(spriteNum == 1) image = left1;
+          //      if(spriteNum == 2) image = left2;
+          //      break;
+          // case "right":
+          //      if(spriteNum == 1) image = right1;
+          //      if(spriteNum == 2) image = right2;
+          //      break;
+          // }
           
           g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
      }
