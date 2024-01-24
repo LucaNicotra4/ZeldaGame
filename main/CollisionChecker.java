@@ -2,6 +2,10 @@ package main;
 
 import entity.Entity;
 
+/**
+ * Class responsible for checking for collisions
+ * between a given entity and certain tiles.
+ */
 public class CollisionChecker {
 
      GamePanel gp;
@@ -22,7 +26,8 @@ public class CollisionChecker {
           int entityBottomRow = entityBottomWorldY/gp.tileSize;
 
           int tileNum1, tileNum2;
-
+          
+          //Checks for next-frame collision with a tile based on direction
           switch(entity.direction){
                case "up":
                     entityTopRow = (entityTopWorldY - entity.speed) / gp.tileSize;
@@ -59,6 +64,14 @@ public class CollisionChecker {
           }
      }
      
+     /**
+      * Checks for entity collisions with objects in the 
+      * GamePanel obj[] array. If collision is true with player, 
+      * gets index of object collided with
+      * @param entity entity object given
+      * @param player if entity given is player
+      * @return index of object collision occured with
+      */
      public int checkObject(Entity entity, boolean player){
           int index = 999;
 

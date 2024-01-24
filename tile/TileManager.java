@@ -10,11 +10,15 @@ import javax.imageio.ImageIO;
 
 import main.GamePanel;
 
+/**
+ * Class used for loading tiles, assigning numeric values, and
+ * using those values to draw map based on given text file.
+ */
 public class TileManager {
      
      GamePanel gp;
-     public Tile[] tile;
-     public int mapTileNum[][];
+     public Tile[] tile; //The different types of tiles
+     public int mapTileNum[][]; //Coordinates for tile nums
 
      public TileManager(GamePanel gp){
           this.gp = gp;
@@ -27,7 +31,10 @@ public class TileManager {
           //loadMap("/res/maps/LinkHouse.txt");
      }
 
-
+     /**
+      * Assigns each Tile type a unique number as its place
+      * in the tile[] array. PNGs saved in the res package
+      */
      public void getTileImage(){
           try{
                tile[0] = new Tile();
@@ -58,7 +65,12 @@ public class TileManager {
           }
      }
 
-     //Read given map file and pass data to mapTileNum
+     /**
+      * Reads given map file and saves data into the 
+      * mapTileNum[][] array, used later by the draw() 
+      * function.
+      * @param filePath text file saved in res.maps
+      */
      public void loadMap(String filePath){
 
           try{
@@ -68,10 +80,12 @@ public class TileManager {
                int col = 0;
                int row = 0;
 
+               //reads file line by line
                while(col < gp.maxWorldCol && row < gp.maxWorldRow){
 
                     String line = br.readLine();
 
+                    //reads each number of each line
                     while(col < gp.maxWorldCol){
 
                          String numbers[] = line.split(" ");
@@ -82,6 +96,7 @@ public class TileManager {
                          col++; 
                          
                     }
+                    //increments row if at the end of the line
                     if(col == gp.maxWorldCol){
                          col = 0;
                          row++;
@@ -94,8 +109,11 @@ public class TileManager {
           }
      }
 
-     //WorldX: position on the map
-     //ScreenX: where on the screen we draw it 
+     /**
+      * Draws the map to the screen tile by tile
+      * using the mapTileNum[][] array
+      * @param g2 Graphics2D class passed by the GamePanel
+      */
      public void draw(Graphics2D g2){
 
           int worldCol = 0;
@@ -105,11 +123,14 @@ public class TileManager {
 
                int tileNum = mapTileNum[worldCol][worldRow];
 
+               //Position on the map
                int worldX = worldCol * gp.tileSize;
                int worldY = worldRow * gp.tileSize;
+               //Actual position on the screen (where on the screen it is drawn)
                int screenX = worldX - gp.player.worldX + gp.player.screenX;
                int screenY = worldY - gp.player.worldY + gp.player.screenY;
-
+               
+               //Checks if worldX position of tile is within the dimensions of the screen
                if(worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
                   worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
                   worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&

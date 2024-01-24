@@ -18,6 +18,7 @@ public class GamePanel extends JPanel implements Runnable{
      final int originalTileSize = 16; // 16x16 tile
      final int scale = 3;
 
+     //SCREEN DIMENSIONS
      public final int tileSize = originalTileSize * scale;
      public final int maxScreenCol = 16;
      public final int maxScreenRow = 12;
@@ -35,13 +36,13 @@ public class GamePanel extends JPanel implements Runnable{
      boolean paused;
 
      //Initiallizing game components
-     TileManager tileM = new TileManager(this);
-     public KeyHandler keyH = new KeyHandler(this);
+     TileManager tileM = new TileManager(this); //Responsible for drawing tiles to screen
+     public KeyHandler keyH = new KeyHandler(this); //Responsible for handling user keystrokes
      Thread gameThread; //Main thread
-     public CollisionChecker cChecker = new CollisionChecker(this);
+     public CollisionChecker cChecker = new CollisionChecker(this); //Responsible for handling collisions between entities and objects or tiles
      public AssetSetter aSetter = new AssetSetter(this);
-     public UI ui = new UI(this);
-     public Player player = new Player(this, keyH);
+     public UI ui = new UI(this); //User Interface class
+     public Player player = new Player(this, keyH); //Main character, played by user
      public SuperObject obj[] = new SuperObject[10]; 
 
      //Default player settings
@@ -50,7 +51,7 @@ public class GamePanel extends JPanel implements Runnable{
      int playerSpeed = 4;
 
      //NPC
-     NPC_1 npc = new NPC_1(this);
+     NPC_1 npc = new NPC_1(this); //old man
 
      //Game State
      public int gameState;

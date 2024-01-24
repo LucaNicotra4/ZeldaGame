@@ -4,6 +4,10 @@ package main;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+/**
+ * Class responsible for handling keyboard input
+ * from the user. Implements KeyListener interface
+ */
 public class KeyHandler implements KeyListener{
 
      GamePanel gp;
@@ -18,6 +22,12 @@ public class KeyHandler implements KeyListener{
      public void keyTyped(KeyEvent e) {
      }
 
+     /**
+      * Records keys pressed by the user and sends the
+      * codes to local functions responsible for 
+      * handling them based on the current game state.
+      * @param KeyEvent the key pressed by the user
+      */
      @Override
      public void keyPressed(KeyEvent e) {
           int code = e.getKeyCode();
@@ -29,7 +39,11 @@ public class KeyHandler implements KeyListener{
           }
      }
 
-
+     /**
+      * Handles key codes received from KeyPressed() function
+      * if the game is paused
+      * @param code key code received from KeyPressed() function
+      */
      public void pauseState(int code){
           if(code == KeyEvent.VK_P){
                gp.gameState = gp.playState;
@@ -46,6 +60,11 @@ public class KeyHandler implements KeyListener{
           }
      }
 
+     /**
+      * Handles key codes received from KeyPressed() function
+      * if the game is not paused
+      * @param code
+      */
      public void playState(int code){
           if(code == KeyEvent.VK_W){ //if user presses 'W'
                upPressed = true;

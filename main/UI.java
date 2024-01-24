@@ -10,7 +10,10 @@ import javax.imageio.ImageIO;
 
 import entity.inventoryItem;
 
-
+/**
+ * Class responsible for the User Interface
+ * of the game
+ */
 public class UI {
      GamePanel gp;
      Graphics2D g2;
@@ -53,7 +56,7 @@ public class UI {
                //drawHearts();
           }
           if(gp.gameState == gp.pauseState){
-               //drawPauseScreen();
+               drawPauseScreen();
                drawInventory();
           }
      }
