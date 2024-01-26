@@ -3,13 +3,14 @@ package entity;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 
 import main.GamePanel;
-//import object.BufferedImage;
 
+/**
+ * Class for first NPC
+ */
 public class NPC_1 extends Entity{
      
      public int screenX, screenY;
@@ -31,13 +32,13 @@ public class NPC_1 extends Entity{
 
           worldX = gp.tileSize * 20;
           worldY = gp.tileSize * 18;
-          // screenX = gp.screenWidth/2 - (gp.tileSize / 2) + 2;
-          // screenY = gp.screenHeight/2 - (gp.tileSize /2);
-          
 
           loadImages();
      }
 
+     /**
+      * Loads directional images for NPC
+      */
      public void loadImages(){
           try{
                up1 = ImageIO.read(getClass().getResourceAsStream("/res/player/Link_Up_1.png"));
@@ -49,17 +50,21 @@ public class NPC_1 extends Entity{
                left1 = ImageIO.read(getClass().getResourceAsStream("/res/player/Link_Left_1.png"));
                left2 = ImageIO.read(getClass().getResourceAsStream("/res/player/Link_Left_2.png"));
           }catch(IOException e){
-               //e.printStackTrace(null);
+               e.printStackTrace();
           }
      }
 
+     /**
+      * Updates NPC position, direction, and stage of movement (Steps)
+      */
      public void update(){
           screenX = worldX - gp.player.worldX + gp.player.screenX;
           screenY = worldY - gp.player.worldY + gp.player.screenY;
 
           gp.cChecker.checkTile(this);
           spriteCounter++;
-          if(this.collisionOn || spriteCounter % 120 == 0){ //player direction changes every 120 frames or on tile collision
+          //Changes direction randomly on collision or every 120 frames
+          if(this.collisionOn || spriteCounter % 120 == 0){
                int random = (int)(Math.random()*4);
                switch(random){
                     case 0: direction = "up";break;
@@ -72,6 +77,7 @@ public class NPC_1 extends Entity{
                spriteCounter = 0;
           }
           
+          //Switches between directional stage
           if(spriteCounter % 12 == 0 && !collisionOn){
                if(spriteNum == 1){
                     spriteNum = 2;
@@ -80,6 +86,7 @@ public class NPC_1 extends Entity{
                }
           }
 
+          //Actual point of movement
           switch(direction){
                case "up":
                     worldY -= speed;
@@ -96,13 +103,12 @@ public class NPC_1 extends Entity{
           }
      }
 
+     /**
+      * Method for drawing NPC to the screen
+      * @param g2 Graphics2D objet from GamePanel
+      */
      public void draw(Graphics2D g2){
-          // g2.setColor(Color.white);
-
-          // g2.fillRect(x, y, gp.tileSize, gp.tileSize); //top
-          
           BufferedImage image = null;
-          image = up1;
 
           switch(direction){
           case "up":
