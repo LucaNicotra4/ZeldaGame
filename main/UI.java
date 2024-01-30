@@ -192,36 +192,41 @@ public class UI {
           // items[3][2] = new inventoryItem("/res/objects/baseSword.png");
      }
 
-     // public void drawHearts(){
-     //      int x = 0;
-     //      int y = 0;
-     //      for(int i = 0; i < 3; i++){
-     //           g2.drawImage(fullHeart, x, y, gp.tileSize, gp.tileSize, null);
-     //           x += gp.tileSize;
-     //      }
-     // }
+     public void drawHearts(){
+          int x = 0;
+          int y = 0;
+          for(int i = 0; i < 3; i++){
+               g2.drawImage(fullHeart, x, y, gp.tileSize, gp.tileSize, null);
+               x += gp.tileSize;
+          }
+     }
 
-     
+     /**
+      * Function that draws heart graphics to the screen
+      * @param hearts current amount of hearts that player has (measured in quarter hearts)
+      * @param maxHearts maximum amount of hearts player can have (measured in quarte hearts)
+      */
      public void updateHearts(int hearts, int maxHearts){
-          int full = hearts % 4;
+          int full = (int)hearts / 4; //number of full hearts
           int count = 0;
-          int x = gp.tileSize*2;
-          int y = gp.tileSize*2;
-          for(int i = 0; i < full; i++){
+          int x = 0;
+          int y = 0;
+
+          for(int i = 0; i < full; i++){ //draws full hearts
                g2.drawImage(fullHeart, x, y, gp.tileSize, gp.tileSize, null);
                count += 4;
                x += gp.tileSize;
           }
           hearts -= (full * 4);
-          if(hearts == 1){
+          if(hearts == 1){ // draws a quarter heart
                g2.drawImage(quarterHeart, x, y, gp.tileSize, gp.tileSize, null);
                count += 1;
                x += gp.tileSize;
-          }else if(hearts == 2){
+          }else if(hearts == 2){ //draws a half heart
                g2.drawImage(halfHeart, x, y, gp.tileSize, gp.tileSize, null);
                count += 2;
                x += gp.tileSize;
-          }else if(hearts == 3){
+          }else if(hearts == 3){ //draws a 3-quarters heart
                g2.drawImage(threeQuartersHeart, x, y, gp.tileSize, gp.tileSize, null);
                count += 3;
                x += gp.tileSize;
@@ -229,7 +234,7 @@ public class UI {
 
           //draw remaining empty hearts
           if(count < maxHearts){
-               int remaining = (maxHearts - count) % 4;
+               int remaining = (maxHearts - count) / 4;
                for(int i = 0; i < remaining; i++){
                     g2.drawImage(emptyHeart, x, y, gp.tileSize, gp.tileSize, null);
                     x += gp.tileSize;

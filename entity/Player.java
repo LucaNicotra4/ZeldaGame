@@ -54,7 +54,8 @@ public class Player extends Entity{
           worldY = gp.tileSize * 21;
           speed = 4;
           direction = "down";
-          maxHearts = hearts = 12;
+          maxHearts = 12;
+          hearts = 12;
      }
 
      /**
