@@ -18,7 +18,7 @@ public class UI {
      GamePanel gp;
      Graphics2D g2;
      Font arial_40, arial_80B;
-     public boolean messageOn = false;
+     public boolean messageOn;
      public String message = "";
      int messageCounter = 0;
      public boolean gameFinished = false;
@@ -43,9 +43,23 @@ public class UI {
 
      //displays message to screen
      public void showMessage(String text){
-          message = text;
+          
+     }
+
+     public void displayMessageOn(){
           messageOn = true;
      }
+
+     public void objectInteractionMessage(String text){
+          message = text;
+          messageOn = true;
+          g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 40F));
+          int x = getCenteredX(text); 
+          int y = (gp.screenHeight/5) * 4;
+
+          g2.drawString(text, x, y);
+     }
+
 
      public void draw(Graphics2D g2){
           this.g2 = g2;
@@ -53,16 +67,17 @@ public class UI {
           g2.setColor(Color.white);
           if(gp.gameState == gp.playState){
                updateHearts(gp.player.hearts, gp.player.maxHearts);
-               //drawHearts();
+               if(messageOn) objectInteractionMessage(message);
           }
           if(gp.gameState == gp.pauseState){
                drawPauseScreen();
                drawInventory();
           }
+          messageOn = false;
      }
 
      public void drawPauseScreen(){
-          g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 80F));
+          g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 40F));
           String text = "PAUSED";
           int x = getCenteredX(text); 
           int y = gp.screenHeight/2;
@@ -190,15 +205,6 @@ public class UI {
           // items[3][0] = new inventoryItem("/res/objects/baseSword.png");
           // items[3][1] = new inventoryItem("/res/objects/baseSword.png");
           // items[3][2] = new inventoryItem("/res/objects/baseSword.png");
-     }
-
-     public void drawHearts(){
-          int x = 0;
-          int y = 0;
-          for(int i = 0; i < 3; i++){
-               g2.drawImage(fullHeart, x, y, gp.tileSize, gp.tileSize, null);
-               x += gp.tileSize;
-          }
      }
 
      /**

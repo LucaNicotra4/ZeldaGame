@@ -97,7 +97,8 @@ public class Player extends Entity{
 
                //CHECK OBJECT COLLISION
                int objIndex = gp.cChecker.checkObject(this, true);
-               pickUpObject(objIndex);
+               if(objIndex != 999) objectCollisionHasOccurred(objIndex);
+               //pickUpObject(objIndex);
 
                //If collision is false, player can move
                if(collisionOn == false){
@@ -125,7 +126,15 @@ public class Player extends Entity{
                          spriteNum = 1;
                     }
                     //spriteCounter = 0;
+                    //System.out.println("(" + this.worldX + ", " + this.worldY + ")");
                }
+          }
+     }
+
+     public void objectCollisionHasOccurred(int index){
+          if(gp.obj[index].name.equals("crate")){
+               gp.ui.objectInteractionMessage("Press R to Interact");
+               //gp.ui.displayMessageOn();
           }
      }
 
